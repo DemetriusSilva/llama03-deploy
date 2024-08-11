@@ -1,1 +1,1 @@
-llama==0.3.0  # Exemplo de dependência
+llama==0.3.1  # Exemplo de dependência
