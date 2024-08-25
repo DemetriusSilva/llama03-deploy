@@ -11,5 +11,8 @@ WORKDIR /app
 # Copie os arquivos necessários
 COPY . .
 
-# Comando para iniciar o Ollama
-CMD ["ollama", "serve"] 
+# Exponha a porta 11434 (porta padrão do Ollama)
+EXPOSE 11434
+
+# Comando para iniciar o Ollama, especificando a interface e porta
+CMD ["ollama", "serve", "-h", "0.0.0.0:11434"]
