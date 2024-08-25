@@ -14,5 +14,8 @@ COPY . .
 # Exponha a porta 11434 (porta padrão do Ollama)
 EXPOSE 11434
 
+# Disk
+VOLUME /var/lib/ollama
+
 # Comando para iniciar o Ollama
 CMD ollama serve
