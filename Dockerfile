@@ -1,17 +1,15 @@
-# Usar uma imagem base Python
-FROM python:3.10-slim
+FROM ubuntu:latest
 
-# Definir o diretório de trabalho
+RUN apt-get update && apt-get install -y curl
+
+# Instale o Ollama
+RUN curl https://ollama.ai/install.sh | sh
+
+# Configure o diretório de trabalho
 WORKDIR /app
 
-# Copiar os requisitos do projeto
-COPY requirements.txt
-
-# Instalar dependências
-RUN pip install --no-cache-dir -r requirements.txt
-
-# Copiar o código do projeto
+# Copie os arquivos necessários
 COPY . .
 
-# Comando para rodar o Llama 03
-CMD ["python", "app.py"]
+# Comando para iniciar o Ollama
+CMD ["ollama", "serve"] 
