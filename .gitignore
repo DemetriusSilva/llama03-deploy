@@ -6,3 +6,12 @@ Thumbs.db
 
 # Diretórios de dependências
 node_modules/ 
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+
+# Ambiente virtual
+venv/
+ENV/
