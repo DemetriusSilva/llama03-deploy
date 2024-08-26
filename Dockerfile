@@ -1,6 +1,6 @@
 FROM ubuntu:latest
 
-RUN apt-get update && apt-get install -y curl
+RUN apt-get update && apt-get install -y curl nginx python3 python3-pip
 
 # Instale o Ollama
 RUN curl https://ollama.ai/install.sh | sh
@@ -11,11 +11,18 @@ WORKDIR /app
 # Copie os arquivos necessários
 COPY . .
 
-# Exponha a porta 11434 (porta padrão do Ollama)
-EXPOSE 11434
+# Instale as dependências Python
+RUN pip3 install -r requirements.txt
+
+# Configure o Nginx
+COPY nginx.conf /etc/nginx/sites-available/default
+RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+# Exponha a porta 80 para o Nginx
+EXPOSE 80
 
 # Disk
 VOLUME /var/lib/ollama
 
-# Comando para iniciar o Ollama
-CMD ollama serve
+# Comando para iniciar o Nginx, Ollama e a aplicação Flask
+CMD service nginx start && ollama serve & python3 app.py
