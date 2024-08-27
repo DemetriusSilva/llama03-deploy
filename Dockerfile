@@ -13,6 +13,7 @@ COPY requirements.txt .
 COPY index.html .
 COPY app.py .
 COPY nginx.conf /etc/nginx/sites-available/default
+RUN cat /etc/nginx/sites-available/default
 
 # Verifique o conteúdo do diretório
 RUN ls -la /app && cat /app/index.html
