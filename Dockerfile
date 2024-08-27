@@ -19,7 +19,8 @@ COPY . .
 
 # Configure o Nginx
 COPY nginx.conf /etc/nginx/sites-available/default
-RUN ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+RUN rm -f /etc/nginx/sites-enabled/default && \
+    ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
 # Exponha a porta 80 para o Nginx
 EXPOSE 80
