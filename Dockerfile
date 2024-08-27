@@ -16,7 +16,7 @@ COPY wsgi.py .
 COPY nginx.conf /etc/nginx/sites-available/default
 
 # Verifique se o index.html foi copiado corretamente
-RUN ls -l /app && echo "Contents of index.html:" && cat /app/index.html
+RUN ls -la /app && echo "Contents of index.html:" && cat /app/index.html
 
 # Instale as dependências Python
 RUN pip install --no-cache-dir --upgrade pip && \
