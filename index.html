@@ -3,28 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interface Ollama</title>
+    <title>Chat com Ollama</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        #chatbox {
-            height: 300px;
-            border: 1px solid #ccc;
-            overflow-y: scroll;
-            margin-bottom: 10px;
-            padding: 10px;
-        }
-        #userInput {
-            width: 70%;
-            padding: 5px;
-        }
-        #sendButton {
-            padding: 5px 10px;
-        }
+        body { font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px; }
+        #chatbox { height: 300px; border: 1px solid #ccc; overflow-y: scroll; margin-bottom: 10px; padding: 10px; }
+        #userInput { width: 70%; padding: 5px; }
+        #sendButton { padding: 5px 10px; }
     </style>
 </head>
 <body>
@@ -61,7 +45,11 @@
             })
             .then(response => response.json())
             .then(data => {
-                appendMessage('Ollama: ' + data.response);
+                if (data.error) {
+                    appendMessage('Erro: ' + data.error);
+                } else {
+                    appendMessage('Ollama: ' + data.response);
+                }
             })
             .catch(error => {
                 console.error('Erro:', error);
