@@ -14,6 +14,9 @@ COPY index.html .
 COPY app.py .
 COPY nginx.conf /etc/nginx/sites-available/default
 
+# Verifique o conteúdo do diretório
+RUN ls -la /app && cat /app/index.html
+
 # Instale as dependências Python
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
