@@ -30,4 +30,4 @@ EXPOSE 80
 VOLUME /var/lib/ollama
 
 # Comando para iniciar o Nginx, Ollama e a aplicação Flask
-CMD service nginx start && ollama serve & python app.py
+CMD service nginx start && ollama serve & python -m flask run --host=0.0.0.0 --port=5000
