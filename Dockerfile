@@ -9,11 +9,13 @@ RUN curl https://ollama.ai/install.sh | sh
 WORKDIR /app
 
 # Copie os arquivos necessários
-COPY . .
+COPY requirements.txt .
 
-# Atualize pip e instale as dependências Python
-RUN pip3 install --no-cache-dir --upgrade pip && \
-    pip3 install --no-cache-dir -r requirements.txt
+# Instale as dependências Python
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copie o resto dos arquivos
+COPY . .
 
 # Configure o Nginx
 COPY nginx.conf /etc/nginx/sites-available/default
@@ -26,4 +28,4 @@ EXPOSE 80
 VOLUME /var/lib/ollama
 
 # Comando para iniciar o Nginx, Ollama e a aplicação Flask
-CMD service nginx start && ollama serve & python3 app.py
+CMD service nginx start && ollama serve & python app.py
