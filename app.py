@@ -1,11 +1,18 @@
 from flask import Flask, request, jsonify, send_from_directory
 import requests
+import os
+import logging
 
 app = Flask(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
 @app.route('/')
 def serve_ui():
-    return send_from_directory('.', 'index.html')
+    try:
+        return send_from_directory(os.path.dirname(os.path.abspath(__file__)), 'index.html')
+    except Exception as e:
+        app.logger.error(f"Error serving index.html: {str(e)}")
+        return "Error serving UI", 500
 
 @app.route('/api/chat', methods=['POST'])
 def chat():
