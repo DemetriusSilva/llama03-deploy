@@ -10,6 +10,8 @@ WORKDIR /app
 
 # Copie os arquivos necessários
 COPY requirements.txt .
+COPY index.html .
+COPY nginx.conf /etc/nginx/sites-available/default
 
 # Instale as dependências Python
 RUN pip install --no-cache-dir --upgrade pip && \
@@ -19,9 +21,11 @@ RUN pip install --no-cache-dir --upgrade pip && \
 COPY . .
 
 # Configure o Nginx
-COPY nginx.conf /etc/nginx/sites-available/default
 RUN rm -f /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
+
+# Verifique se o index.html foi copiado corretamente
+RUN ls -l /app && cat /app/index.html
 
 # Exponha a porta 80 para o Nginx
 EXPOSE 80
@@ -30,4 +34,4 @@ EXPOSE 80
 VOLUME /var/lib/ollama
 
 # Comando para iniciar o Nginx, Ollama e a aplicação Flask
-CMD service nginx start && ollama serve & python -m flask run --host=0.0.0.0 --port=5000
+CMD service nginx start && ollama serve & python app.py
