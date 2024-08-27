@@ -11,20 +11,18 @@ WORKDIR /app
 # Copie os arquivos necessários
 COPY requirements.txt .
 COPY index.html .
+COPY app.py .
 COPY nginx.conf /etc/nginx/sites-available/default
 
 # Instale as dependências Python
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Copie o resto dos arquivos
-COPY . .
-
 # Configure o Nginx
 RUN rm -f /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
-# Verifique se o index.html foi copiado corretamente
+# Verifique se os arquivos estão no lugar correto
 RUN ls -l /app && cat /app/index.html
 
 # Exponha a porta 80 para o Nginx
