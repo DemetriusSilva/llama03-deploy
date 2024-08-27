@@ -15,6 +15,9 @@ COPY app.py .
 COPY wsgi.py .
 COPY nginx.conf /etc/nginx/sites-available/default
 
+# Verifique se o index.html foi copiado corretamente
+RUN ls -l /app && echo "Contents of index.html:" && cat /app/index.html
+
 # Instale as dependências Python
 RUN pip install --no-cache-dir --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
@@ -22,9 +25,6 @@ RUN pip install --no-cache-dir --upgrade pip && \
 # Configure o Nginx
 RUN rm -f /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
-
-# Verifique se os arquivos estão no lugar correto
-RUN ls -l /app && echo "Contents of app directory:" && cat /app/index.html
 
 # Exponha as portas 80 para o Nginx e 11434 para o Ollama
 EXPOSE 80 11434
@@ -38,4 +38,4 @@ CMD service nginx start && \
     echo "Waiting for Ollama to start..." && \
     sleep 10 && \
     echo "Starting Flask app with Gunicorn..." && \
-    gunicorn --bind 0.0.0.0:5000 wsgi:app
+    gunicorn --bind 0.0.0.0:5000 wsgi:app --log-level debug
