@@ -10,13 +10,9 @@ WORKDIR /app
 
 # Copie os arquivos necessários
 COPY requirements.txt .
-COPY index.html .
 COPY app.py .
 COPY wsgi.py .
 COPY nginx.conf /etc/nginx/sites-available/default
-
-# Verifique se o index.html foi copiado corretamente
-RUN ls -la /app && echo "Contents of index.html:" && cat /app/index.html
 
 # Instale as dependências Python
 RUN pip install --no-cache-dir --upgrade pip && \
