@@ -1,6 +1,6 @@
-FROM ubuntu:latest
+FROM python:3.9-slim
 
-RUN apt-get update && apt-get install -y curl nginx python3 python3-pip
+RUN apt-get update && apt-get install -y curl nginx
 
 # Instale o Ollama
 RUN curl https://ollama.ai/install.sh | sh
@@ -11,8 +11,9 @@ WORKDIR /app
 # Copie os arquivos necessários
 COPY . .
 
-# Instale as dependências Python
-RUN pip3 install -r requirements.txt
+# Atualize pip e instale as dependências Python
+RUN pip3 install --no-cache-dir --upgrade pip && \
+    pip3 install --no-cache-dir -r requirements.txt
 
 # Configure o Nginx
 COPY nginx.conf /etc/nginx/sites-available/default
