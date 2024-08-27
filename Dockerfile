@@ -22,11 +22,8 @@ RUN pip install --no-cache-dir --upgrade pip && \
 RUN rm -f /etc/nginx/sites-enabled/default && \
     ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
-# Verifique se os arquivos estão no lugar correto
-RUN ls -l /app && cat /app/index.html
-
-# Exponha a porta 80 para o Nginx
-EXPOSE 80
+# Exponha as portas 80 para o Nginx e 11434 para o Ollama
+EXPOSE 80 11434
 
 # Disk
 VOLUME /var/lib/ollama
